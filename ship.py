@@ -28,7 +28,16 @@ class Ship:
 
     def blitme(self):
         """Draw the ship at its current position"""
-        self.screen.blit(self.image, self.rect)
+        rotate_angle = 0
+        if self.moving_right:
+            rotate_angle = -self.settings.ship_rotate_scale
+        elif self.moving_left:
+            rotate_angle = +self.settings.ship_rotate_scale
+
+        if rotate_angle != 0:
+            self.screen.blit(pygame.transform.rotate(self.image, rotate_angle), self.rect)
+        else:
+            self.screen.blit(self.image, self.rect)
 
     def update(self):
         """Update the ship`s position based on the movement flags."""
@@ -37,6 +46,7 @@ class Ship:
         if self.moving_down and self.rect.y < self.screen_rect.bottom - self.rect.height:
             self.y += self.settings.ship_speed
         if self.moving_left and self.rect.x > self.screen_rect.left:
+
             self.x -= self.settings.ship_speed
         if self.moving_right and self.rect.x < self.screen_rect.right - self.rect.width:
             self.x += self.settings.ship_speed

@@ -14,10 +14,7 @@ class AlienInvasion:
         pygame.init()
 
         self.settings = Settings(size)
-
-        # Needs to be refactorized
         self._set_screen(size)
-
 
         # self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
         pygame.display.set_caption("Alien Invasion")
@@ -101,16 +98,6 @@ class AlienInvasion:
     def _update_screen(self):
         self.screen.fill(self.bg_color)
         self.ship.blitme()
-
-        # if self.ship.moving_up:
-        #     if self.ship.moving_right:
-        #         self.screen.blit(pygame.transform.rotate(self, +45), self.rect)
-        #     elif self.ship.moving_left:
-        #         self.screen.blit(pygame.transform.rotate(self, -45), self.rect)
-        #     else:
-        #         self.screen.blit(pygame.transform.rotate(self, +45), self.rect)
-        # else:
-        #     self.screen.blit(pygame.transform.rotate(self, +45), self.rect)
 
         for bullet in self.bullets:
             bullet.draw_bullet()
