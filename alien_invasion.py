@@ -9,7 +9,6 @@ from bullet import Bullet
 
 class AlienInvasion:
     """General class to manage assets and behavior"""
-
     def __init__(self, size="Small"):
         """Initialize the game, and create game resources."""
         pygame.init()
@@ -17,12 +16,7 @@ class AlienInvasion:
         self.settings = Settings(size)
 
         # Needs to be refactorized
-        if size == "Fullscreen":
-            self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-            self.settings.screen_width = self.screen.get_rect().width
-            self.settings.screen_height = self.screen.get_rect().height
-        else:
-            self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
+        self._set_screen(size)
 
 
         # self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
@@ -31,6 +25,16 @@ class AlienInvasion:
         self.bullets = pygame.sprite.Group()
         self.bg_color = self.settings.bg_color
 
+
+    def _set_screen(self, size):
+        if size == "Fullscreen":
+            self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+            self.settings.screen_width = self.screen.get_rect().width
+            self.settings.screen_height = self.screen.get_rect().height
+        else:
+            self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
+
+
     def run_game(self):
         """Start the main loop for the game"""
         while True:
@@ -38,6 +42,7 @@ class AlienInvasion:
             self.ship.update()
             self._update_bullets()
             self._update_screen()
+
 
     def _check_events(self):
         # Even listening:
@@ -48,6 +53,7 @@ class AlienInvasion:
                 self._check_KEYDOWN_events(event)
             elif event.type == pygame.KEYUP:
                 self._check_KEYUP_events(event)
+
 
     def _check_KEYDOWN_events(self, event):
         """Respond to key presses."""
@@ -69,6 +75,7 @@ class AlienInvasion:
         elif event.key == pygame.K_q:
             sys.exit()
 
+
     def _check_KEYUP_events(self, event):
         """"Respond to key releases."""
         if event.key == pygame.K_UP:
@@ -82,6 +89,7 @@ class AlienInvasion:
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = False
 
+
     def _update_bullets(self):
         self.bullets.update()
         # Get rid of the bullets that disappeared.
@@ -89,20 +97,34 @@ class AlienInvasion:
             if bullet.y <= 0 or bullet.x <= 0 or bullet.x >= self.settings.screen_width:
                 self.bullets.remove(bullet)
 
+
     def _update_screen(self):
         self.screen.fill(self.bg_color)
         self.ship.blitme()
+
+        # if self.ship.moving_up:
+        #     if self.ship.moving_right:
+        #         self.screen.blit(pygame.transform.rotate(self, +45), self.rect)
+        #     elif self.ship.moving_left:
+        #         self.screen.blit(pygame.transform.rotate(self, -45), self.rect)
+        #     else:
+        #         self.screen.blit(pygame.transform.rotate(self, +45), self.rect)
+        # else:
+        #     self.screen.blit(pygame.transform.rotate(self, +45), self.rect)
+
         for bullet in self.bullets:
             bullet.draw_bullet()
 
         # Make most recent screen visible:
         pygame.display.flip()
 
+
     def _fire_bullet(self, direction="up"):
         """Create a new bullet and add it to the bullets group"""
         if len(self.bullets) < self.settings.bullets_allowed:
             new_bullet = Bullet(self, direction)
             self.bullets.add(new_bullet)
+
 
 if __name__ == "__main__":
     # Make a game instance, and run it
