@@ -11,8 +11,10 @@ class Settings:
         self.bg_color = (230, 230, 230)
         self.ship_rotate_scale = standard_ship_rotate_scale
 
+
         #Bullet settings
-        self.bullet_speed = 0.1
+        standard_bullet_speed = 1
+
         self.bullet_width = 3
         self.bullet_height = 15
         self.bullet_color = (60, 60, 60)
@@ -23,9 +25,18 @@ class Settings:
             self.screen_height = standard_screen_height
 
             self.ship_speed = standard_ship_speed
+            self.bullet_speed = standard_bullet_speed
 
         elif size == "Small":
-            self.screen_width = standard_screen_width / 2
-            self.screen_height = standard_screen_height / 2
+            self.screen_width = standard_screen_width // 2
+            self.screen_height = standard_screen_height // 2
 
             self.ship_speed = standard_ship_speed / 20
+            self.bullet_speed = standard_bullet_speed / 10
+
+
+        #Alien settings
+        self.alien_speed = 1.0
+        self.fleet_drop_speed = 10
+        # fleet_direction of 1 represents right; -1 represents left.
+        self.fleet_direction = 1
