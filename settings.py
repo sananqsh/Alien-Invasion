@@ -1,6 +1,6 @@
 class Settings:
     """Store Alien Invason settings"""
-    def __init__(self, size="Medium"):
+    def __init__(self, size="Fullscreen"):
         standard_screen_width = 1200
         standard_screen_height = 800
 
@@ -15,14 +15,18 @@ class Settings:
         self.time_after_ship_hit = 0.5
 
         # Bullet settings
-        standard_bullet_speed = 1.5
+        standard_bullet_speed = 4
 
         self.bullet_width = 3
         self.bullet_height = 15
         self.bullet_color = (60, 60, 60)
         self.bullets_allowed = 3
 
-        if size == "Medium":
+        if size == "Fullscreen":
+            self.ship_speed = standard_ship_speed * 1.2
+            self.bullet_speed = standard_bullet_speed * 1.2
+
+        elif size == "Medium":
             self.screen_width = standard_screen_width
             self.screen_height = standard_screen_height
 
