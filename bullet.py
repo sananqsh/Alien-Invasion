@@ -24,7 +24,7 @@ class Bullet(Sprite):
             elif direction == "right":
                 self.rect.x += (ai_game.ship.rect.width / 2)
 
-
+        # Store a decimal value for the ship's horizontal position.
         self.y = float(self.rect.y)
         self.x = float(self.rect.x)
         self.direction = direction

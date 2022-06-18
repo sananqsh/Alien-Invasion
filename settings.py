@@ -4,16 +4,18 @@ class Settings:
         standard_screen_width = 1200
         standard_screen_height = 800
 
-        #Ship settings
+        # Ship settings
         standard_ship_speed = 1.5
         standard_ship_rotate_scale = 5
 
         self.bg_color = (230, 230, 230)
         self.ship_rotate_scale = standard_ship_rotate_scale
 
+        # Pause time when ship got hit
+        self.time_after_ship_hit = 0.5
 
-        #Bullet settings
-        standard_bullet_speed = 1
+        # Bullet settings
+        standard_bullet_speed = 1.5
 
         self.bullet_width = 3
         self.bullet_height = 15
@@ -35,8 +37,11 @@ class Settings:
             self.bullet_speed = standard_bullet_speed / 10
 
 
-        #Alien settings
+        # Alien settings
         self.alien_speed = 1.0
         self.fleet_drop_speed = 10
         # fleet_direction of 1 represents right; -1 represents left.
         self.fleet_direction = 1
+
+        # Game statistics
+        self.ship_limit = 3
