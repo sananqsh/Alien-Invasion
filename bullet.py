@@ -1,10 +1,10 @@
-import sys
 import pygame
-
 from pygame.sprite import Sprite
 
 class Bullet(Sprite):
+    """A class to manage ship bullets"""
     def __init__(self, ai_game, direction="up"):
+        """Create a bullet object at the ship's current position."""
         super().__init__()
         self.screen = ai_game.screen
         self.settings = ai_game.settings
@@ -12,10 +12,12 @@ class Bullet(Sprite):
         self.color = self.settings.bullet_color
 
         if direction == "up":
-            self.rect = pygame.Rect(0,0, self.settings.bullet_width, self.settings.bullet_height)
+            self.rect = pygame.Rect(0,0, self.settings.bullet_width,
+                self.settings.bullet_height)
             self.rect.midtop = ai_game.ship.rect.midtop
         elif direction in ["left", "right"]:
-            self.rect = pygame.Rect(0,0, self.settings.bullet_height, self.settings.bullet_width)
+            self.rect = pygame.Rect(0,0, self.settings.bullet_height,
+                self.settings.bullet_width)
             self.rect.midtop = ai_game.ship.rect.center
 
             # Residing at the left/right side of the ship:
