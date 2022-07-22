@@ -5,6 +5,7 @@ import pygame
 
 from settings import Settings
 from game_stats import GameStats
+from scoreboard import Scoreboard
 from button import Button
 from ship import Ship
 from bullet import Bullet
@@ -20,6 +21,8 @@ class AlienInvasion:
         self._set_screen(size)
 
         self.stats = GameStats(self)
+
+        self.scoreboard = Scoreboard(self)
 
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
@@ -74,6 +77,9 @@ class AlienInvasion:
             else:
                 self._start_game()
 
+            # Reset the game settings.
+            self.settings.initialize_dynamic_settings()
+
     def _check_KEYDOWN_events(self, event):
         """Respond to key presses."""
         if event.key == pygame.K_UP:
@@ -112,6 +118,7 @@ class AlienInvasion:
         # Reset game statistics.
         self.stats.reset_stats()
         self.stats.game_active = True
+        self.scoreboard.prep_score()
 
         # Get rid of any remaining aliens and bullets.
         self.aliens.empty()
@@ -140,10 +147,19 @@ class AlienInvasion:
         collisions = pygame.sprite.groupcollide(
             self.bullets, self.aliens, True, True)
 
+        # The value associated with each bullet is a list of aliens it has
+        #   collided with
+        if collisions:
+            for aliens in collisions.values():
+                self.stats.score += self.settings.alien_points * len(aliens)
+            self.scoreboard.prep_score()
+            self.scoreboard.check_high_score()
+
         if not self.aliens:
             # Destroy existing bullets and create new fleet.
             self.bullets.empty()
             self._create_fleet()
+            self.settings.increase_intensity()
 
     def _ship_hit(self):
         """Respond to the ship being hit by an alien."""
@@ -212,6 +228,8 @@ class AlienInvasion:
             bullet.draw_bullet()
 
         self.aliens.draw(self.screen)
+
+        self.scoreboard.show_scores()
 
         if not self.stats.game_active:
             pygame.mouse.set_visible(True)
