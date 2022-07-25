@@ -283,6 +283,5 @@ class AlienInvasion:
 
 if __name__ == "__main__":
     # Make a game instance, and run it
-    # size = input("Enter game screen size:")
     ai = AlienInvasion("Fullscreen")
     ai.run_game()
