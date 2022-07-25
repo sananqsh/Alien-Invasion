@@ -1,6 +1,6 @@
 class Settings:
     """Store Alien Invason settings"""
-    def __init__(self, size="Medium"):
+    def __init__(self, size="Fullscreen"):
         # Screen settings
         self.bg_color = (230, 230, 230)
         self.screen_width = 1200
@@ -27,16 +27,19 @@ class Settings:
         # Speed up scale
         self.speedup_scale = 1.1
 
+        # High score path
+        self.high_score_path = "high_score.txt"
+
         self.initialize_dynamic_settings()
 
-        if size != "Medium":
+        if size != "Fullscreen":
             self.modify_settings_by_size(size)
 
     def modify_settings_by_size(self, size):
         """modify settings based on size, if size of the game was not Medium"""
-        if size == "Fullscreen":
-            self.ship_speed *= 1.2
-            self.bullet_speed *= 1.2
+        if size == "Medium":
+            self.ship_speed *= 0.8
+            self.bullet_speed *= 0.8
         elif size == "Small":
             self.screen_width //= 2
             self.screen_height //= 2
@@ -46,8 +49,8 @@ class Settings:
 
     def initialize_dynamic_settings(self):
         """Initialize settings that change throughout the game."""
-        self.ship_speed = 1.5
-        self.bullet_speed = 4
+        self.ship_speed = 1.8
+        self.bullet_speed = 4.8
         self.alien_speed = 1.0
 
         # fleet_direction of 1 represents right; -1 represents left.
