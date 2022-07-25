@@ -50,6 +50,10 @@ class Scoreboard:
         self.high_score_rect.centerx = self.screen_rect.centerx
         self.high_score_rect.top = self.score_rect.top
 
+        # Update high score in file.
+        with open(self.settings.high_score_path, 'w+') as high_score_file:
+            high_score_file.write(f"high_score: {self.stats.high_score}")
+
     def prep_level(self):
         """Turn level into a rendered image."""
         level_str = "Lvl: " + str(self.stats.level)
